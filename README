@@ -1,0 +1,10 @@
+# Vagrant + Ansible + Docker
+
+## Vagrantセットアップ
+
+### Centos7を利用する
+
+```
+> vagrant init bento/centos-7
+> vagrant up
+```
