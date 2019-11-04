@@ -1,0 +1,42 @@
+---
+- name: Update yum package list.
+  yum:
+    name: '*'
+    state: latest
+    update_cache: yes
+- name: Install required packages. (show https://github.com/rbenv/ruby-build/wiki#suggested-build-environment)
+  yum:
+    name:
+      - git
+      - gcc
+      - bzip2
+      - openssl-devel
+      - libyaml-devel
+      - libffi-devel
+      - readline-devel
+      - zlib-devel
+      - gdbm-devel
+      - ncurses-devel
+- name: Install rbenv.
+  git:
+    repo: https://github.com/rbenv/rbenv.git
+    dest: ~/.rbenv
+    accept_hostkey: yes
+- name: Add PATH of rbenv.
+  shell: |
+    echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bash_profile
+    echo 'eval "$(rbenv init -)"' >> ~/.bash_profile
+- name: Create directory of ruby-build.
+  file:
+    path: ~/.rbenv/plugins
+    state: directory
+- name: Install ruby-build.
+  git:
+    repo: https://github.com/rbenv/ruby-build.git
+    dest: ~/.rbenv/plugins/ruby-build
+    accept_hostkey: yes
+- name: Install ruby-2.6.5.
+  shell: |
+    source ~/.bash_profile
+    rbenv install 2.6.5
+    rbenv global 2.6.5

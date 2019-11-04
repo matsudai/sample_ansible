@@ -3,3 +3,7 @@
   become: yes
   roles:
     - docker
+- hosts: all
+  become: yes
+  roles:
+    - ruby
