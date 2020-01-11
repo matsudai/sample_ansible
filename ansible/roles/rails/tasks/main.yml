@@ -1,0 +1,29 @@
+---
+- name: Update yum package list.
+  yum:
+    name: '*'
+    state: latest
+    update_cache: yes
+- name: Install required packages.
+  yum:
+    name:
+      - postgresql-devel
+      - gcc-c++
+      - nodejs
+- name: Install Ruby on Rails.
+  become_user: "{{ user }}"
+  gem:
+    name: rails
+    user_install: no
+    executable: ~/.rbenv/shims/gem
+- name: Install n.
+  npm:
+    name: n
+    global: yes
+- name: Install node {{ node_version }}.
+  shell: |
+    n {{ node_version }}
+- name: Install yarn.
+  npm:
+    name: yarn
+    global: yes

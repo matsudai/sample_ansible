@@ -1,0 +1,25 @@
+version: '3'
+services:
+  # web:
+  #   build: ./web
+  #   command: bundle && bundle exec rails server -p 3000 -b 0.0.0.0
+  #   volumes:
+  #     - ./sample_rails:/app
+  #     - ./vendor/bundle:/usr/local/bundle
+  #   ports:
+  #     - 3000:3000
+  #   depends_on:
+  #     - db
+  #   # Config for pry debugging
+  #   tty: true
+  #   stdin_open: true
+  db:
+    image: postgres:alpine
+    ports:
+      - 5432:5432
+    volumes:
+      - ./postgres/initdb.d:/docker-entrypoint-initdb.d
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    network_mode: host
