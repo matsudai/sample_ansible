@@ -18,30 +18,30 @@
       - gdbm-devel
       - ncurses-devel
 - name: Install rbenv.
-  become_user: vagrant
+  become_user: "{{ user }}"
   git:
     repo: https://github.com/rbenv/rbenv.git
     dest: ~/.rbenv
     accept_hostkey: yes
 - name: Add PATH of rbenv.
-  become_user: vagrant
+  become_user: "{{ user }}"
   shell: |
     echo 'export PATH="$HOME/.rbenv/bin:$PATH"' >> ~/.bash_profile
     echo 'eval "$(rbenv init -)"' >> ~/.bash_profile
 - name: Create directory of ruby-build.
-  become_user: vagrant
+  become_user: "{{ user }}"
   file:
     path: ~/.rbenv/plugins
     state: directory
 - name: Install ruby-build.
-  become_user: vagrant
+  become_user: "{{ user }}"
   git:
     repo: https://github.com/rbenv/ruby-build.git
     dest: ~/.rbenv/plugins/ruby-build
     accept_hostkey: yes
-- name: Install ruby-2.6.5.
-  become_user: vagrant
+- name: Install ruby-{{ ruby_version }}.
+  become_user: "{{ user }}"
   shell: |
     source ~/.bash_profile
-    rbenv install 2.6.5
-    rbenv global 2.6.5
+    rbenv install {{ ruby_version }}
+    rbenv global {{ ruby_version }}

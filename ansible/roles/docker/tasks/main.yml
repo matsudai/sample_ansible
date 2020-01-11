@@ -13,16 +13,17 @@
       - docker-ce-cli
       - containerd.io
 - name: Install docker-compose command. (show http://docs.docker.jp/compose/install.html)
-  shell: |
-    curl -L https://github.com/docker/compose/releases/download/1.24.1/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose && \
-    chmod +x /usr/local/bin/docker-compose
+  get_url:
+    url: https://github.com/docker/compose/releases/download/{{ docker_compose_version }}/docker-compose-{{ ansible_system }}-{{ ansible_architecture }}
+    dest: /usr/local/bin/docker-compose
+    mode: 0755
 - name: Start docker on boot.
   service:
     name: docker
     enabled: yes
-- name: Append vagrant user to docker group.
+- name: Append {{ user }} user to docker group.
   user:
-    name: vagrant
+    name: "{{ user }}"
     groups: docker
     append: yes
 - name: Restart docker service.
