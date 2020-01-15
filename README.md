@@ -35,7 +35,7 @@ $ cd web
 Update config for DB connection.
 
 ```bash
-$ vi vi config/database.yml
+$ vi config/database.yml
 ```
 
 ```yaml
